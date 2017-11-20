@@ -32,8 +32,9 @@
 }
 
 - (IBAction)stepperPressed:(UIStepper *)sender {
-    NSNumber *convertedValue = [NSNumber numberWithDouble: self.stepper.value];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FirstViewControllerChanged" object:self userInfo:@{@"Stepper": convertedValue}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FirstViewControllerChanged"
+                                                        object:self
+                                                      userInfo:@{@"Stepper": @(self.stepper.value)}];
 
     
 }
