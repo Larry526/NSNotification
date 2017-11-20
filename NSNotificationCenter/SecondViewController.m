@@ -12,18 +12,27 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
+@property (nonatomic) NSInteger count;
 @end
 
 @implementation SecondViewController
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateTextDisplay:)
+                                                     name:@"FirstViewControllerChanged"
+                                                   object:nil];
+
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(updateTextDisplay:)
-     name:@"FirstViewControllerChanged"
-     object:nil];
+
+    [self _updateCountLabel];
 }
 
 
@@ -33,8 +42,23 @@
 }
 
 
--(void)updateTextDisplay:(NSNotification *)notification{
-    self.countLabel.text = [notification.userInfo[@"Stepper"] stringValue];
+- (void)updateTextDisplay:(NSNotification *)notification
+{
+    id stepperObject = notification.userInfo[@"Stepper"];
+    if ([stepperObject isKindOfClass:[NSNumber class]]) {
+        self.count = ((NSNumber *)stepperObject).integerValue;
+    }
+}
+
+- (void)setCount:(NSInteger)count
+{
+    _count = count;
+    [self _updateCountLabel];
+}
+
+- (void)_updateCountLabel
+{
+    self.countLabel.text = @(self.count).stringValue;
 }
 
 @end
