@@ -10,13 +10,20 @@
 
 @interface SecondViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
+
 @end
 
 @implementation SecondViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(updateTextDisplay:)
+     name:@""
+     object:nil];
 }
 
 
@@ -25,5 +32,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)updateTextDisplay:(NSNotification *)notification{
+    self.countLabel.text = [notification.userInfo[@"Stepper"] stringValue];
+}
 
 @end

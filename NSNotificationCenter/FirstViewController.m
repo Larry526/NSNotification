@@ -9,6 +9,9 @@
 #import "FirstViewController.h"
 
 @interface FirstViewController ()
+@property (weak, nonatomic) IBOutlet UIStepper *stepper;
+
+@property (nonatomic, strong) NSDictionary *userInfo;
 
 @end
 
@@ -16,13 +19,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    
+
+
 }
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)stepperPressed:(UIStepper *)sender {
+    NSNumber *convertedValue = [NSNumber numberWithDouble: self.stepper.value];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FirstViewControllerChanged" object:self userInfo:@{@"Stepper": convertedValue}];
+
+    
 }
 
 
