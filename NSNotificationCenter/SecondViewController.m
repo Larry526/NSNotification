@@ -22,7 +22,7 @@
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(updateTextDisplay:)
-     name:@""
+     name:@"FirstViewControllerChanged"
      object:nil];
 }
 
